@@ -6,9 +6,9 @@ This project implements a whimsical yet robust HTTP server for a caffeinated hav
 
 ## Routes
 
-- `/client/order/` (POST): Clients place their americano orders.
-- `/worker/start/` (GET): Baristas start preparing the oldest order.
-- `/worker/finish/` (POST): Baristas mark an order as ready.
+- `/order/` (POST): Clients place their americano orders.
+- `/start/` (GET): Baristas start preparing the oldest order.
+- `/finish/` (POST): Baristas mark an order as ready.
 
 ## Setup and Running
 
@@ -29,16 +29,15 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 ## Running with Docker
 
 ### Build the Docker image:
-docker build -t caffeinated_odyssey .
+docker build -t caff .
 
 ### Run the Docker container:
-docker run -p 8000:8000 caffeinated_odyssey
+docker run -p 8000:8000 -p 8001:8001 --network=host caff
 
 
-
-## DDoS Protection
 The nginx.conf file provides a simple solution to protect against DDoS attacks. To use this configuration:
 
+## Running Nginx separately
 ###  1. Install Nginx:
 sudo apt update
 sudo apt install nginx
@@ -58,18 +57,9 @@ Happy brewing! ☕️
 
 ### Summary
 - The project is structured to separate concerns and keep the code organized.
-- The `client.py` handles client orders, while the `worker.py` handles barista actions.
 - The `nginx.conf` file provides basic DDoS protection.
 - The `Dockerfile` allows for easy containerization of the application.
 - The `README.md` provides clear instructions for setup and running the application.
-
-
-
-# Run the client server
-uvicorn app.main:client_app --host 0.0.0.0 --port 8000
-
-# Run the worker server
-uvicorn app.main:worker_app --host 0.0.0.0 --port 8001
 
 
 
